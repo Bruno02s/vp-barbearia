@@ -1,0 +1,965 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VP Barbearia - O melhor da VP são os VPzeiros!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vp-primary': '#35353f',
+                        'vp-secondary': '#c6cbde',
+                        'vp-dark': '#1f1f23',
+                        'vp-light': '#f5f7fa',
+                        'vp-accent': '#6366f1',
+                        'vp-gold': '#fbbf24'
+                    },
+                    fontFamily: {
+                        'elegant': ['Playfair Display', 'serif'],
+                        'modern': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Marble Effect - Usando Background Real */
+        .marble-bg {
+            background: 
+                url('backgorund.png'),
+                linear-gradient(135deg, #f8f9fb 0%, #f2f4f7 50%, #f6f8fa 100%);
+            background-size: cover, 100% 100%;
+            background-position: center, center;
+            background-repeat: no-repeat, no-repeat;
+            background-blend-mode: overlay;
+            position: relative;
+        }
+        
+        .marble-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(248, 249, 251, 0.02);
+            pointer-events: none;
+        }
+
+        body {
+            background: #f6f7f9;
+        }
+        
+        .hero-grid {
+            border-bottom: 1px solid rgba(53, 53, 63, 0.08);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(53, 53, 63, 0.08);
+            box-shadow: 0 8px 30px rgba(53, 53, 63, 0.1);
+        }
+        
+        .glass-nav {
+            background: rgba(53, 53, 63, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(198, 203, 222, 0.4);
+            box-shadow: 0 4px 20px rgba(53, 53, 63, 0.3);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(53, 53, 63, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #35353f;
+            box-shadow: 0 4px 20px rgba(53, 53, 63, 0.08);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(53, 53, 63, 0.12);
+            border-color: rgba(198, 203, 222, 0.3);
+        }
+        
+        .review-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(53, 53, 63, 0.08);
+            color: #35353f;
+            box-shadow: 0 4px 20px rgba(53, 53, 63, 0.08);
+        }
+        
+        .contact-card {
+            background: #35353f;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(198, 203, 222, 0.3);
+            box-shadow: 0 10px 30px rgba(53, 53, 63, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #35353f, #1f1f23);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1f1f23, #35353f);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(53, 53, 63, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(198, 203, 222, 0.2);
+            color: #35353f;
+            border: 2px solid rgba(53, 53, 63, 0.3);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(53, 53, 63, 0.1);
+            border-color: #c6cbde;
+            color: #c6cbde;
+            transform: translateY(-3px);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #35353f, #c6cbde);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .hero-content {
+            padding: 2rem;
+            background: transparent;
+        }
+        
+        .hero-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .logo-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 20px 60px rgba(53, 53, 63, 0.2);
+            border: 3px solid rgba(53, 53, 63, 0.1);
+        }
+        
+        .logo-ring {
+            position: absolute;
+            border: 3px solid rgba(198, 203, 222, 0.4);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .logo-ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            animation-direction: normal;
+        }
+        
+        .logo-ring:nth-child(2) {
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            animation-direction: reverse;
+            animation-duration: 25s;
+        }
+        
+        .logo-ring:nth-child(3) {
+            width: 140%;
+            height: 140%;
+            top: -20%;
+            left: -20%;
+            animation-duration: 30s;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            color: #666666;
+            animation: float 6s ease-in-out infinite;
+            font-weight: 900;
+            text-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+            z-index: 25;
+        }
+
+        /* Garante que o ícone do menu nunca anima */
+        #menu-icon {
+            animation: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        
+        .floating-icon:nth-child(1) {
+            top: 10%;
+            left: 28%;
+            animation-delay: 0s;
+        }
+        
+        .floating-icon:nth-child(2) {
+            top: 46%;
+            right: 6%;
+            animation-delay: 2s;
+        }
+        
+        .floating-icon:nth-child(3) {
+            top: 38%;
+            left: 8%;
+            animation-delay: 4s;
+        }
+        
+        .floating-icon:nth-child(4) {
+            bottom: 0%;
+            right: 48%;
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-split {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            
+            .hero-visual {
+                order: -1;
+                min-height: 40vh;
+            }
+            
+            .logo-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            /* Ajuste das info cards para não cobrirem a logo */
+            .hero-visual > .glass-effect {
+                position: static !important;
+                margin: 2.5rem auto 0 auto;
+                display: block;
+                max-width: 90vw;
+                left: unset !important;
+                right: unset !important;
+                top: unset !important;
+                bottom: unset !important;
+            }
+            .hero-visual {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            /* Espaço extra para a navbar não cobrir a logo */
+            #inicio.hero-grid {
+                padding-top: 5.5rem;
+            }
+        }
+        /* Garante que absolutamente nada dentro do botão do menu anima ou mexe */
+        button[onclick="toggleMenu()"] *, #menu-icon {
+            animation: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+<body class="font-modern text-vp-primary overflow-x-hidden">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="vp-logo.png" alt="VP Barbearia" class="h-12 w-12 rounded-full border-2 border-white shadow-xl bg-white p-1">
+                    <div>
+                        <h1 class="text-xl font-elegant font-bold text-white drop-shadow-lg">VP Barbearia</h1>
+                        <p class="text-xs text-vp-secondary drop-shadow">Excelência em cada corte</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-white hover:text-vp-secondary transition-all duration-300 font-medium">Início</a>
+                    <a href="#servicos" class="text-white hover:text-vp-secondary transition-all duration-300 font-medium">Serviços</a>
+                    <a href="#avaliacoes" class="text-white hover:text-vp-secondary transition-all duration-300 font-medium">Avaliações</a>
+                    <a href="#contato" class="text-white hover:text-vp-secondary transition-all duration-300 font-medium">Contato</a>
+                </div>
+                
+                <button class="md:hidden text-white hover:text-vp-secondary" onclick="toggleMenu()">
+                    <i id="menu-icon" class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-6 space-y-4 border-t border-white/20 pt-4">
+                <a href="#inicio" class="block text-white hover:text-vp-secondary transition-all duration-300 py-2">Início</a>
+                <a href="#servicos" class="block text-white hover:text-vp-secondary transition-all duration-300 py-2">Serviços</a>
+                <a href="#avaliacoes" class="block text-white hover:text-vp-secondary transition-all duration-300 py-2">Avaliações</a>
+                <a href="#contato" class="block text-white hover:text-vp-secondary transition-all duration-300 py-2">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-grid marble-bg">
+        <div class="hero-split container mx-auto px-6">
+            <!-- Left Content -->
+            <div class="hero-content space-y-8 slide-in-left">
+                <div class="space-y-6">
+                    <div class="inline-block px-4 py-2 bg-vp-secondary/20 text-vp-primary rounded-full text-sm font-semibold">
+                        ⭐ 5.0 Estrelas no Google
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-elegant font-bold text-gradient leading-tight">
+                        VP Barbearia
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl text-vp-primary font-medium">
+                        O melhor da VP são os VPzeiros!
+                    </p>
+                    
+                    <p class="text-lg text-vp-primary/80 leading-relaxed max-w-lg">
+                        Ambiente familiar com profissionais altamente qualificados, 
+                        proporcionando seu bem-estar e visual perfeito em cada visita.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://sites.appbarber.com.br/agendamento/vpbarbearia-f2zq" target="_blank" 
+                       class="btn-primary px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                        <i class="fas fa-calendar-check mr-3"></i>
+                        Agendar Horário
+                    </a>
+                    <a href="tel:+5585921396574" 
+                       class="btn-secondary px-8 py-4 rounded-full text-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                        <i class="fas fa-phone mr-3"></i>
+                        (85) 9 2139-6574
+                    </a>
+                </div>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 pt-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-vp-primary">500+</div>
+                        <div class="text-sm text-vp-primary font-medium">Clientes Satisfeitos</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-vp-primary">5.0</div>
+                        <div class="text-sm text-vp-primary font-medium">Avaliação Google</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-vp-primary">5+</div>
+                        <div class="text-sm text-vp-primary font-medium">Anos de Experiência</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Visual -->
+            <div class="hero-visual slide-in-right">
+                <div class="logo-container">
+                    <div class="logo-ring"></div>
+                    <div class="logo-ring"></div>
+                    <div class="logo-ring"></div>
+                    
+                    <img src="vp-logo.png" alt="VP Barbearia" 
+                         class="absolute inset-0 w-full h-full object-contain rounded-full shadow-2xl">
+                    
+                    <div class="floating-elements">
+                        <i class="floating-icon fas fa-cut text-2xl"></i>
+                        <i class="floating-icon fas fa-coffee text-2xl"></i>
+                        <i class="floating-icon fas fa-star text-2xl"></i>
+                        <i class="floating-icon fas fa-beer text-2xl"></i>
+                    </div>
+                </div>
+                
+                <!-- Additional Info Cards -->
+                <div class="absolute bottom-10 left-10 glass-effect rounded-xl p-6 max-w-xs border-2 border-vp-secondary/30" style="z-index: 10;">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-clock text-2xl" style="color: #666666;"></i>
+                        <div>
+                            <div class="font-bold text-vp-primary text-lg">Aberto Agora</div>
+                            <div class="text-vp-primary/70 font-medium">Seg-Sáb: 08:00-18:00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="absolute top-10 right-10 glass-effect rounded-xl p-6 max-w-xs border-2 border-vp-secondary/30" style="z-index: 10;">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-map-marker-alt text-2xl" style="color: #666666;"></i>
+                        <div>
+                            <div class="font-bold text-vp-primary text-lg">Parque Manibura</div>
+                            <div class="text-vp-primary/70 font-medium">Fortaleza - CE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicos" class="py-24 marble-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 fade-in">
+                <h2 class="text-5xl md:text-6xl font-elegant font-bold mb-8 text-gradient">Nossos Serviços</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-vp-primary to-vp-secondary mx-auto mb-6"></div>
+                <p class="text-xl md:text-2xl text-vp-primary max-w-3xl mx-auto leading-relaxed font-medium">
+                    Experiências únicas com profissionais especializados para<br>
+                    <span class="text-vp-primary font-bold">transformar seu visual com excelência</span>
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card rounded-2xl p-8 text-center fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-br from-vp-primary to-vp-dark rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-cut text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-elegant font-bold mb-4 text-vp-primary">Corte Masculino</h3>
+                    <p class="text-vp-primary/80 mb-6 leading-relaxed font-medium">
+                        Cortes modernos e clássicos executados com precisão técnica e atenção aos detalhes
+                    </p>
+                    <div class="text-4xl font-bold text-vp-primary mb-2">R$ 25</div>
+                    <p class="text-sm text-vp-primary/70 font-medium">Duração: 45min</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 text-center fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-br from-vp-secondary to-slate-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-tie text-3xl text-vp-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-elegant font-bold mb-4">Barba & Bigode</h3>
+                    <p class="text-vp-primary/70 mb-6 leading-relaxed">
+                        Modelagem artística com produtos premium e técnicas tradicionais refinadas
+                    </p>
+                    <div class="text-4xl font-bold text-vp-primary mb-2">R$ 20</div>
+                    <p class="text-sm text-vp-primary/60">Duração: 30min</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 text-center fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-br from-vp-secondary to-slate-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-crown text-3xl text-vp-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-elegant font-bold mb-4">Combo Completo</h3>
+                    <p class="text-vp-primary/70 mb-6 leading-relaxed">
+                        Experiência completa com corte, barba e finalização para o visual perfeito
+                    </p>
+                    <div class="text-4xl font-bold text-vp-primary mb-2">R$ 40</div>
+                    <p class="text-sm text-vp-primary/60">Duração: 1h15min</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 text-center fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-br from-vp-secondary to-slate-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-child text-3xl text-vp-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-elegant font-bold mb-4">Corte Infantil</h3>
+                    <p class="text-vp-primary/70 mb-6 leading-relaxed">
+                        Atendimento carinhoso e especializado para crianças com paciência e cuidado
+                    </p>
+                    <div class="text-4xl font-bold text-vp-primary mb-2">R$ 20</div>
+                    <p class="text-sm text-vp-primary/60">Duração: 30min</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 text-center fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-br from-vp-primary to-slate-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-spa text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-elegant font-bold mb-4">Tratamentos</h3>
+                    <p class="text-vp-primary/70 mb-6 leading-relaxed">
+                        Hidratação profunda e tratamentos especializados para cabelo e barba saudáveis
+                    </p>
+                    <div class="text-4xl font-bold text-vp-primary mb-2">R$ 30+</div>
+                    <p class="text-sm text-vp-primary/60">Duração: 45min</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 text-center fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-br from-vp-secondary to-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-gem text-3xl text-vp-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-elegant font-bold mb-4">Atendimento VIP</h3>
+                    <p class="text-vp-primary/70 mb-6 leading-relaxed">
+                        Experiência exclusiva com agendamento personalizado e atenção diferenciada
+                    </p>
+                    <div class="text-4xl font-bold text-vp-primary mb-2">Consultar</div>
+                    <p class="text-sm text-vp-primary/60">Horário exclusivo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="avaliacoes" class="py-24 bg-gradient-to-br from-vp-primary to-vp-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 fade-in">
+                <h2 class="text-5xl md:text-6xl font-elegant font-bold mb-8 text-vp-secondary">Avaliações dos Clientes</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-vp-primary to-vp-secondary mx-auto mb-8"></div>
+                
+                <div class="flex justify-center items-center space-x-3 mb-6">
+                    <div class="flex space-x-1 text-4xl">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <span class="text-2xl text-vp-secondary font-semibold ml-4">5.0 no Google</span>
+                </div>
+                
+                <p class="text-xl text-vp-secondary/80">
+                    Depoimentos reais dos nossos clientes sobre a experiência VP
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="review-card rounded-2xl p-8 fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-vp-primary to-vp-dark rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                            I
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold">Israel Oliveira</h4>
+                            <div class="flex space-x-1 mt-1">
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-vp-primary/80 leading-relaxed text-lg">
+                        "Lugar sensacional, ambiente familiar onde tive uma experiência de ser bem recebido e bem cuidado, por profissionais altamente qualificados me proporcionando meu bem estar perante meu visual."
+                    </p>
+                </div>
+                
+                <div class="review-card rounded-2xl p-8 fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-vp-secondary to-slate-400 rounded-full flex items-center justify-center text-vp-primary font-bold text-xl mr-4">
+                            R
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold">Rubens Xavier</h4>
+                            <div class="flex space-x-1 mt-1">
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-vp-primary/80 leading-relaxed text-lg">
+                        "Ambiente agradável e confortável! Atendimento do Rodrigo foi especial! Muito simpático e carismático! Além de ter dado atenção total a minha demanda! O corte saiu impecável!"
+                    </p>
+                </div>
+                
+                <div class="review-card rounded-2xl p-8 fade-in">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-vp-secondary to-slate-300 rounded-full flex items-center justify-center text-vp-primary font-bold text-xl mr-4">
+                            B
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold">Bruno Pinheiro</h4>
+                            <div class="flex space-x-1 mt-1">
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-vp-primary/80 leading-relaxed text-lg">
+                        "Experiência muito boa! Excelente atendimento, ótima estrutura e profissionais qualificados! Gostaria de agradecer ao barbeiro Jorge que entendeu qual a proposta e executou com bastante precisão!"
+                    </p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="https://vpbarbearia.com.br" target="_blank" 
+                   class="bg-vp-secondary text-vp-primary px-10 py-4 rounded-full text-lg font-semibold hover:bg-vp-light transition-all duration-300 transform hover:scale-105 inline-block">
+                    <i class="fab fa-google mr-3"></i>
+                    Ver Mais Avaliações no Google
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-24 marble-bg">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 fade-in">
+                <h2 class="text-5xl md:text-6xl font-elegant font-bold mb-8 text-gradient">Entre em Contato</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-vp-primary to-vp-secondary mx-auto mb-6"></div>
+                <p class="text-xl text-vp-primary font-medium">Estamos prontos para cuidar do seu visual com total excelência</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div class="space-y-8 fade-in">
+                    <div class="contact-card rounded-2xl p-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-vp-primary to-vp-dark rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-2xl text-white"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-elegant font-bold mb-3 text-vp-secondary">Localização</h3>
+                                <p class="text-vp-secondary/80 text-lg leading-relaxed">
+                                    R. João Alves de Albuquerque, 301 - A<br>
+                                    Parque Manibura, Fortaleza - CE<br>
+                                    <span class="text-vp-secondary font-semibold">CEP: 60821-730</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card rounded-2xl p-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-vp-secondary to-slate-300 rounded-full flex items-center justify-center">
+                                <i class="fas fa-clock text-2xl" style="color: #666666;"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-elegant font-bold mb-3 text-vp-secondary">Funcionamento</h3>
+                                <p class="text-vp-secondary/80 text-lg leading-relaxed">
+                                    Segunda a Sábado: <span class="text-vp-secondary font-semibold">08:00 - 18:00</span><br>
+                                    Domingo: <span class="text-red-400 font-semibold">Fechado</span><br>
+                                    <span id="status" class="text-green-400 font-semibold">Aberto agora</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card rounded-2xl p-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-vp-secondary to-slate-400 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone text-2xl" style="color: #666666;"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-elegant font-bold mb-3 text-vp-secondary">Telefone</h3>
+                                <a href="tel:+5585921396574" class="text-lg text-vp-secondary/80 hover:text-vp-secondary transition-colors duration-300 font-semibold">
+                                    (85) 9 2139-6574
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card rounded-2xl p-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-vp-secondary to-slate-300 rounded-full flex items-center justify-center">
+                                <i class="fas fa-heart text-2xl" style="color: #666666;"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-elegant font-bold mb-3 text-vp-secondary">Ambiente Inclusivo</h3>
+                                <p class="text-vp-secondary/80 text-lg">
+                                    <i class="fas fa-rainbow mr-2" style="color: #666666;"></i>
+                                    Empresa que acolhe a comunidade LGBTQ+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="space-y-8 fade-in">
+                    <div class="bg-gradient-to-br from-vp-primary to-vp-dark rounded-2xl p-10 text-center text-white">
+                        <i class="fas fa-calendar-alt text-5xl mb-6" style="color: #666666;"></i>
+                        <h3 class="text-3xl font-elegant font-bold mb-4">Agende Seu Horário</h3>
+                        <p class="mb-8 text-lg opacity-90">
+                            Use nosso sistema de agendamento online para garantir seu horário na VP Barbearia
+                        </p>
+                        <a href="https://sites.appbarber.com.br/agendamento/vpbarbearia-f2zq" target="_blank" 
+                           class="bg-white text-vp-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-vp-light transition-all duration-300 transform hover:scale-105 inline-block">
+                            <i class="fas fa-external-link-alt mr-3"></i>
+                            Agendar Online
+                        </a>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-vp-secondary to-slate-300 rounded-2xl p-10 text-center text-vp-primary">
+                        <i class="fab fa-whatsapp text-5xl mb-6" style="color: #666666;"></i>
+                        <h3 class="text-3xl font-elegant font-bold mb-4">WhatsApp</h3>
+                        <p class="mb-8 text-lg opacity-90">
+                            Entre em contato direto conosco pelo WhatsApp para dúvidas e agendamentos rápidos
+                        </p>
+                        <a href="https://wa.me/5585921396574" target="_blank" 
+                           class="bg-white text-vp-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 inline-block">
+                            <i class="fab fa-whatsapp mr-3"></i>
+                            Chamar no WhatsApp
+                        </a>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-vp-secondary to-slate-400 rounded-2xl p-10 text-center text-vp-primary">
+                        <i class="fas fa-route text-5xl mb-6" style="color: #666666;"></i>
+                        <h3 class="text-3xl font-elegant font-bold mb-4">Como Chegar</h3>
+                        <p class="mb-8 text-lg opacity-90">
+                            Veja nossa localização exata e trace a melhor rota no Google Maps
+                        </p>
+                        <a href="https://maps.google.com/search/6G49+88+Parque+Manibura,+Fortaleza+-+CE" target="_blank" 
+                           class="bg-white text-vp-primary px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 inline-block">
+                            <i class="fas fa-directions mr-3"></i>
+                            Ver no Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-vp-primary py-16 border-t border-vp-secondary/20">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-12 text-center md:text-left">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start space-x-4 mb-6">
+                        <img src="vp-logo.png" alt="VP Barbearia" class="h-12 w-12 rounded-full border-2 border-white shadow-xl bg-white p-1">
+                        <div>
+                            <h3 class="text-2xl font-elegant font-bold text-white drop-shadow-lg">VP Barbearia</h3>
+                            <p class="text-sm text-vp-secondary drop-shadow">Desde 2020</p>
+                        </div>
+                    </div>
+                    <p class="text-vp-secondary leading-relaxed">
+                        O melhor da VP são os VPzeiros!<br>
+                        Profissionais qualificados dedicados ao<br>
+                        seu bem-estar e visual perfeito.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-elegant font-bold mb-6 text-vp-secondary">Links Rápidos</h4>
+                    <div class="space-y-3">
+                        <a href="#servicos" class="block text-vp-secondary hover:text-white transition-colors duration-300 text-lg">Serviços</a>
+                        <a href="#avaliacoes" class="block text-vp-secondary hover:text-white transition-colors duration-300 text-lg">Avaliações</a>
+                        <a href="https://sites.appbarber.com.br/agendamento/vpbarbearia-f2zq" target="_blank" class="block text-vp-secondary hover:text-white transition-colors duration-300 text-lg">Agendamento</a>
+                        <a href="https://vpbarbearia.com.br" target="_blank" class="block text-vp-secondary hover:text-white transition-colors duration-300 text-lg">Site Oficial</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-elegant font-bold mb-6 text-vp-secondary">Redes Sociais</h4>
+                    <div class="flex justify-center md:justify-start space-x-4 mb-6">
+                        <a href="https://www.instagram.com/vpbarbearia/" target="_blank" 
+                           class="w-12 h-12 bg-gradient-to-br from-vp-secondary to-slate-300 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                            <i class="fab fa-instagram text-xl" style="color: #666666;"></i>
+                        </a>
+                        <a href="https://wa.me/5585921396574" target="_blank" 
+                           class="w-12 h-12 bg-gradient-to-br from-vp-secondary to-slate-400 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                            <i class="fab fa-whatsapp text-xl" style="color: #666666;"></i>
+                        </a>
+                        <a href="https://linktr.ee/VPmais" target="_blank" 
+                           class="w-12 h-12 bg-gradient-to-br from-vp-primary to-vp-dark rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-link text-xl text-white"></i>
+                        </a>
+                    </div>
+                    <p class="text-vp-secondary text-sm">
+                        Siga-nos para dicas e novidades!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-vp-secondary text-lg">
+                    © 2025 VP Barbearia. Todos os direitos reservados.<br>
+                    <span style="color: #666666;" class="text-2xl">💙</span> <span class="text-vp-secondary">Ambiente LGBTQ+ Friendly</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // Enhanced Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced Navbar behavior
+        let lastScrollY = window.scrollY;
+        const nav = document.querySelector('nav');
+        
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            // Change navbar appearance on scroll
+            if (currentScrollY > 100) {
+                nav.style.background = 'rgba(53, 53, 63, 0.98)';
+                nav.style.borderBottomColor = 'rgba(198, 203, 222, 0.3)';
+                nav.style.boxShadow = '0 4px 20px rgba(53, 53, 63, 0.3)';
+            } else {
+                nav.style.background = 'rgba(53, 53, 63, 0.95)';
+                nav.style.borderBottomColor = 'rgba(198, 203, 222, 0.2)';
+                nav.style.boxShadow = 'none';
+            }
+            
+            // Hide/show navbar on scroll direction
+            if (currentScrollY > lastScrollY && currentScrollY > 200) {
+                nav.style.transform = 'translateY(-100%)';
+            } else {
+                nav.style.transform = 'translateY(0)';
+            }
+            lastScrollY = currentScrollY;
+        });
+
+        // Dynamic status update
+        function updateStatus() {
+            const now = new Date();
+            const hour = now.getHours();
+            const day = now.getDay();
+            
+            const statusElement = document.getElementById('status');
+            if (statusElement) {
+                if (day === 0) { // Sunday
+                    statusElement.textContent = 'Fechado - Domingo';
+                    statusElement.className = 'text-red-400 font-semibold';
+                } else if (hour >= 8 && hour < 18) {
+                    statusElement.textContent = 'Aberto agora';
+                    statusElement.className = 'text-green-400 font-semibold';
+                } else {
+                    statusElement.textContent = 'Fechado';
+                    statusElement.className = 'text-red-400 font-semibold';
+                }
+            }
+        }
+
+        // Enhanced service card interactions
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-15px) scale(1.05)';
+                card.style.boxShadow = '0 25px 50px rgba(53, 53, 63, 0.25)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        // Removido o parallax JS para manter apenas a animação CSS dos ícones flutuantes
+
+        // Add smooth page transitions
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatus();
+            setInterval(updateStatus, 60000);
+            
+            // Stagger animations for hero section
+            setTimeout(() => {
+                document.querySelector('.slide-in-left').classList.add('visible');
+            }, 200);
+            
+            setTimeout(() => {
+                document.querySelector('.slide-in-right').classList.add('visible');
+            }, 400);
+        });
+
+        // Loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.8s ease-in-out';
+        });
+    </script>
+</body>
+</html>
